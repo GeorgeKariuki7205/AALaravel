@@ -12,4 +12,9 @@ class Organisation extends Model
     {
         return $this->belongsTo('App\User', 'createdByUserId', 'id');
     }
+
+    public function oranisationHasManyOpportunities()
+    {
+        return $this->hasMany('App\Opportunity', 'organisationId', 'id');
+    }
 }

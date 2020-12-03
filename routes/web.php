@@ -22,3 +22,22 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/organisations','OrganisationController@landingPageForOrganiations')->name('organisations');
+
+Route::post('/addingAnOrganiation','OrganisationController@addingAnOrganiation');
+
+Route::post('/updateOrganisation','OrganisationController@updateOrganisation');
+
+Route::post('/deleteOrganisation','OrganisationController@deletingAnOrganisation');
+
+Route::get('/opportunitiesPostedByMe','OpportunityController@apportunitiesAddedByMe');
+
+Route::post('/addOpportunity','OpportunityController@addOpportunity');
+
+Route::post('/updatePosition','OpportunityController@updateOpportunity');
+
+Route::post('/deleteOpportunity','OpportunityController@deleteOpportunity');
+
+
+
+
+

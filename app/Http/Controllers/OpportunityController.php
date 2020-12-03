@@ -4,82 +4,77 @@ namespace App\Http\Controllers;
 
 use App\Opportunity;
 use Illuminate\Http\Request;
-
+use Auth;
+use App\Organisation;
+use RealRashid\SweetAlert\Facades\Alert;
 class OpportunityController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
+  
+    public function apportunitiesAddedByMe(){
+
+        $userId = Auth::user()->id; 
+
+        $allopportunities = Opportunity::where('createdByUserId',$userId)->get();
+        $allOrganisations = Organisation::all();
+
+        // foreach ($allopportunities as $allopportunity) {
+
+        //     # code...
+        // }
+
+        return view('OpportunitiesAddedByMe',['allopportunities'=>$allopportunities,'allOrganisations'=>$allOrganisations]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+    public function addOpportunity(Request $request){
+
+        $newOpportunity = new Opportunity();
+        
+        $newOpportunity->createdByUserId = Auth::user()->id;
+        $newOpportunity->organisationId  = $request->pos_org;
+        $newOpportunity->name            = $request->pos_name;
+        $newOpportunity->description     = $request->pos_des;
+        $newOpportunity->salary          = $request->pos_salary;
+        $newOpportunity->stage = $request->pos_stage;
+
+        $newOpportunity->save();
+        
+        Alert::success( '  Opportunity Successfully been Added .', '');                
+        return back();
+
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    public function updateOpportunity(Request $request){
+
+        $opportunities = Opportunity::where('id',$request->pos_id)->get();
+
+        foreach ($opportunities as $opportunity) {
+
+            $opportunity->organisationId  = $request->pos_org;
+            $opportunity->name            = $request->pos_name;
+            $opportunity->description     = $request->pos_des;
+            $opportunity->salary          = $request->pos_salary;
+            $opportunity->stage = $request->pos_stage;
+
+        $opportunity->save();
+            # code...
+        }
+        
+        Alert::success( '  Opportunity Successfully been Updated .', '');                
+        return back();
+
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Opportunity $opportunity)
-    {
-        //
-    }
+    public function deleteOpportunity(Request $request){
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Opportunity $opportunity)
-    {
-        //
-    }
+        $opportunities = Opportunity::where('id',$request->pos_id)->get();
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Opportunity $opportunity)
-    {
-        //
-    }
+        foreach ($opportunities as $opportunity) {                   
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Opportunity  $opportunity
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Opportunity $opportunity)
-    {
-        //
+                $opportunity->delete();
+                    # code...
+                }
+        
+        Alert::success( '  Opportunity Successfully been Deleted .', '');                
+        return back();
     }
 }
