@@ -17,7 +17,12 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/app.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('bootstrap-4.5.3-dist/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('fontawesome-free-5.15.1-web\css\all.css') }}" rel="stylesheet">    
+    {{-- <link href="{{ asset('bootstrap-3.3.7-dist/css/bootstrap-theme.min.css') }}" rel="stylesheet"> --}}
+    {{-- /bootstrap-theme.min.css --}}
+    
 </head>
 <body>
     <div id="app">
@@ -45,10 +50,19 @@
                             </li>
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register A User') }}</a>
                                 </li>
                             @endif
                         @else
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('All Oportunities.') }}</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="/organisations">{{ __('Organisations.') }}</a>
+                        </li>
+                        <li class="nav-item"> 
+                            <a class="nav-link" href="{{ route('login') }}">{{ __('Opprotunities Added.') }}</a>
+                        </li>                        
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                     {{ Auth::user()->name }}
@@ -76,5 +90,6 @@
             @yield('content')
         </main>
     </div>
+    <script src="{{asset('bootstrap-4.5.3-dist/js/bootstrap.min.js')}}"></script>
 </body>
 </html>
